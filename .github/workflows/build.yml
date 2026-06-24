@@ -1,4 +1,4 @@
-name: Build Project
+name: Android Build
 
 on:
   push:
@@ -12,13 +12,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
         with:
-          node-version: 20
+          distribution: temurin
+          java-version: 17
 
-      - name: Install dependencies
-        run: npm install
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
 
-      - name: Build project
-        run: npm run build
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
